@@ -23,4 +23,17 @@ gastosControllers.getGastos = async (req, res) => {
   ]);
 };
 
+gastosControllers.addGasto = async(req,res)=>{
+  console.log(req.body);
+  res.send("Nuevo gasto registrado"); 
+}
+
+gastosControllers.updateGasto = async (req, res) => {
+  res.send('Monto del gasto de VIVIENDA actualizado');
+};
+
+gastosControllers.deleteGasto = async (req, res) => {
+  res.send('Gastos con ID ' + req.params.id + ' borrados');
+};
+
 module.exports = gastosControllers;
