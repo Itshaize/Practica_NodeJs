@@ -1,38 +1,45 @@
+const Gasto = require('../models/gastos');
 const gastosControllers = {};
 
 gastosControllers.getGastos = async (req, res) => {
-  res.json([
-    {
-      id: '100',
-      gasto: 'Salud',
-      monto: 14575.6,
-      informacion: 'Corresponde a consultas medicas, pagos de seguros, medicinas'
-    },
-    {
-      id: '200',
-      gasto: 'Educacion',
-      monto: 3575.6,
-      informacion: 'Corresponde a pensiones de colegios, transporte escolar'
-    },
-    {
-      id: '300',
-      gasto: 'Vivienda',
-      monto: 5575.6,
-      informacion: 'Corresponde a pago servicios basicos'
-    }
-  ]);
+  const gastos = await Gasto.find();
+  res.json(gastos);
 };
 
-gastosControllers.addGasto = async(req,res)=>{
-  console.log(req.body);
-  res.send("Nuevo gasto registrado"); 
-}
+gastosControllers.getGasto = async (req, res) => {
+  console.log(req.params.id);
+  const gasto = await Gasto.findById(req.params.id);
+  res.json(gasto);
+};
 
-gastosControllers.updateGasto = async (req, res) => {
-  res.send('Monto del gasto de VIVIENDA actualizado');
+gastosControllers.addGasto = async (req, res) => {
+  const gasto = new Gasto({
+    tipo: req.body.tipo,
+    ruc: req.body.ruc,
+    empresa: req.body.empresa,
+    monto: req.body.monto,
+    descripcion: req.body.descripcion
+  });
+  console.log(gasto);
+  await gasto.save();
+  res.json('status: Gasto guardado');
+};
+
+gastosControllers.editGasto = async (req, res) => {
+  const { id } = req.params;
+  const gasto = {
+    tipo: req.body.tipo,
+    ruc: req.body.ruc,
+    empresa: req.body.empresa,
+    monto: req.body.monto,
+    descripcion: req.body.descripcion
+  };
+  await Gasto.findByIdAndUpdate(id, { $set: gasto }, { new: true });
+  res.json('status: Gasto actualizado');
 };
 
 gastosControllers.deleteGasto = async (req, res) => {
+  await Gasto.findByIdAndDelete(req.params.id);
   res.send('Gastos con ID ' + req.params.id + ' borrados');
 };
 

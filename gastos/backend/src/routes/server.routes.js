@@ -25,7 +25,8 @@ router.post('/misitio/calculos',(req,res)=>{
 
 router.get('/misitio/gastos',gasto.getGastos);
 router.post('/misitio/gastos', gasto.addGasto);
-router.put('/misitio/gastos/:id', gasto.updateGasto);
+router.get('/misitio/gastos/:id', gasto.getGasto);
+router.put('/misitio/gastos/:id', gasto.editGasto);
 router.delete('/misitio/gastos/:id', gasto.deleteGasto);
 
 router.get('/misitio/usuarios',usuario.getUsuarios);
