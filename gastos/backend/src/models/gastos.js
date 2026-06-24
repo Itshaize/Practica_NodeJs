@@ -6,7 +6,8 @@ const GastosSchema = new Schema({
     ruc: { type: String },
     empresa: { type: String },
     monto: { type: Number, required: true },
-    descripcion: { type: String }
+    descripcion: { type: String },
+    createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('Gasto', GastosSchema);
