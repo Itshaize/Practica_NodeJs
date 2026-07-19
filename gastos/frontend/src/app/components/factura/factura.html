@@ -1,0 +1,35 @@
+<div class="componente">
+  <h2>Facturas Gastos</h2>
+
+  <form (ngSubmit)="agregar()">
+    <label for="ruc">RUC</label>
+    <input id="ruc" name="ruc" type="text" [(ngModel)]="ruc">
+
+    <label for="empresa">Empresa</label>
+    <input id="empresa" name="empresa" type="text" [(ngModel)]="empresa">
+
+    <label for="valor">Valor de factura</label>
+    <input id="valor" name="valor" type="number" [(ngModel)]="valor">
+
+    <label for="gasto">Tipo de gasto</label>
+    <select id="gasto" name="gasto" [(ngModel)]="gasto">
+      <option value="Ninguno">Escoja el tipo de gasto</option>
+      <option value="Salud">Salud</option>
+      <option value="Vivienda">Vivienda</option>
+      <option value="Educacion">Educacion</option>
+      <option value="Alimentacion">Alimentacion</option>
+      <option value="Vestimenta">Vestimenta</option>
+    </select>
+
+    <button type="submit">Agregar</button>
+  </form>
+
+  <div class="resultado">
+    <h3>Datos ingresados</h3>
+    <p>RUC: {{ ruc }}</p>
+    <p>EMPRESA: {{ empresa }}</p>
+    <p>VALOR: {{ valor }}</p>
+    <p>TIPO GASTO: {{ gasto }}</p>
+    <p *ngIf="mensaje">{{ mensaje }}</p>
+  </div>
+</div>

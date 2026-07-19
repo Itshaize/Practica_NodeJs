@@ -1,0 +1,47 @@
+<section class="componente" aria-labelledby="titulo-reporte">
+  <header class="encabezado">
+    <div>
+      <span class="eyebrow">HttpClient · JSON local</span>
+      <h2 id="titulo-reporte">Reporte de pago de impuesto a la renta</h2>
+      <p>Información obtenida mediante GET desde <code>assets/datos.json</code>.</p>
+    </div>
+    <div class="total" *ngIf="!cargando && !error">
+      <span>Total registrado</span>
+      <strong>{{ total | currency:'USD':'symbol':'1.2-2' }}</strong>
+    </div>
+  </header>
+
+  <div class="estado" *ngIf="cargando" role="status">
+    <span class="spinner" aria-hidden="true"></span>
+    Cargando gastos…
+  </div>
+
+  <div class="estado error" *ngIf="error" role="alert">
+    <span>{{ error }}</span>
+    <button type="button" (click)="cargar()">Reintentar</button>
+  </div>
+
+  <div class="tabla-contenedor" *ngIf="!cargando && !error">
+    <table class="table align-middle mb-0">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Tipo de gasto</th>
+          <th scope="col">RUC</th>
+          <th scope="col" class="text-end">Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let gasto of gastos">
+          <th scope="row">{{ gasto.id }}</th>
+          <td><span class="categoria">{{ gasto.tipo | titlecase }}</span></td>
+          <td class="ruc">{{ gasto.ruc }}</td>
+          <td class="valor">{{ gasto.valor | currency:'USD':'symbol':'1.2-2' }}</td>
+        </tr>
+        <tr *ngIf="!gastos.length">
+          <td colspan="4" class="empty">El archivo no contiene gastos.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

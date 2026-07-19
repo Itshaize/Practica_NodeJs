@@ -1,0 +1,65 @@
+<section class="componente" aria-labelledby="titulo-usuarios">
+  <header class="encabezado">
+    <div>
+      <span class="eyebrow">HttpClient · API REST externa</span>
+      <h2 id="titulo-usuarios">Directorio de usuarios</h2>
+      <p>Datos reales obtenidos con GET desde JSONPlaceholder.</p>
+    </div>
+
+    <label class="buscador" *ngIf="!cargando && !error">
+      <span class="visually-hidden">Buscar usuarios</span>
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
+      </svg>
+      <input type="search" [(ngModel)]="busqueda" placeholder="Buscar usuario…">
+    </label>
+  </header>
+
+  <div class="estado" *ngIf="cargando" role="status">
+    <span class="spinner" aria-hidden="true"></span>
+    Consultando API…
+  </div>
+
+  <div class="estado error" *ngIf="error" role="alert">
+    <span>{{ error }}</span>
+    <button type="button" (click)="cargar()">Reintentar</button>
+  </div>
+
+  <div class="tabla-contenedor" *ngIf="!cargando && !error">
+    <table class="table align-middle mb-0">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Usuario</th>
+          <th scope="col">Correo</th>
+          <th scope="col">Empresa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuariosFiltrados">
+          <th scope="row">{{ usuario.id }}</th>
+          <td>
+            <div class="persona">
+              <span class="avatar" aria-hidden="true">{{ usuario.name.charAt(0) }}</span>
+              <span>
+                <strong>{{ usuario.name }}</strong>
+                <small>{{ usuario.address.city }}</small>
+              </span>
+            </div>
+          </td>
+          <td><span class="username">&#64;{{ usuario.username }}</span></td>
+          <td><a [href]="'mailto:' + usuario.email">{{ usuario.email }}</a></td>
+          <td>{{ usuario.company.name }}</td>
+        </tr>
+        <tr *ngIf="!usuariosFiltrados.length">
+          <td colspan="5" class="empty">No hay coincidencias para “{{ busqueda }}”.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer *ngIf="!cargando && !error">
+    {{ usuariosFiltrados.length }} de {{ usuarios.length }} usuarios
+  </footer>
+</section>
