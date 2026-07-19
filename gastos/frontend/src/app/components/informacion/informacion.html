@@ -1,0 +1,25 @@
+<div class="componente">
+  <h2>Informacion de gastos deducibles</h2>
+  <p>
+    Esta aplicacion permite registrar facturas de gastos personales para revisar deducciones y calcular
+    informacion relacionada con el SRI.
+  </p>
+
+  <div class="contenido">
+    <img src="/assets/banner-gastos.png" alt="Imagen de gastos deducibles">
+
+    <div>
+      <h3>Gastos deducibles</h3>
+      <ul class="deducibles">
+        <li *ngFor="let deducible of deducibles">
+          <strong>{{ deducible.tipo }}:</strong> {{ deducible.descripcion }}
+          <br>
+          <button type="button" (click)="informacion(deducible)">Informacion</button>
+          <button type="button" (click)="borrarDeducible(deducible)">Borrar</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="mensaje">{{ mensaje }}</p>
+</div>
